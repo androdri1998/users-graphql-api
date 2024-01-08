@@ -38,6 +38,12 @@ Run `$ npm run dev` to start application in watching mode.
 ## Users
 
 ```
+input AddUserInput {
+  age: Int!
+  email: String!
+  name: String!
+}
+
 input SearchUserInput {
   id: ID!
 }
@@ -59,6 +65,10 @@ type User {
   vip: Boolean
 }
 
+type Mutation {
+  addUser(data: AddUserInput!): User!
+}
+
 type Query {
   user(data: SearchUserInput!): User
   users: [User]!
@@ -69,6 +79,10 @@ type Query {
 
 - user(data: SearchUserInput!): User
 - users: [User]!
+
+### Mutations available
+
+- addUser(data: AddUserInput!): User!
 
 ## Profiles
 

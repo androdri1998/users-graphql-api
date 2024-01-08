@@ -5,4 +5,5 @@ export interface UserDTO {
   age?: number;
   salary_real?: number;
   vip?: boolean;
+  status?: string;
 }

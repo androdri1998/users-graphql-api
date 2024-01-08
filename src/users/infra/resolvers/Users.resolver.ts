@@ -1,6 +1,13 @@
-import { Arg, FieldResolver, Query, Resolver, Root } from "type-graphql";
+import {
+  Arg,
+  FieldResolver,
+  Mutation,
+  Query,
+  Resolver,
+  Root,
+} from "type-graphql";
 
-import { User } from "../dtos/models/User.model";
+import { User, UserStatus } from "../dtos/models/User.model";
 import { UserInput } from "../dtos/inputs/User.input";
 import { SearchUserInput } from "../dtos/inputs/SearchUser.input";
 import { users as usersData } from "../database";
@@ -12,6 +19,8 @@ import ProfilesInMemoryRepository from "../../../profiles/infra/repositories/Pro
 import { profiles as profileData } from "../../../profiles/infra/database";
 import FindProfileService from "../../../profiles/services/implementations/FindProfile.service";
 import { Profile } from "../../../profiles/infra/dtos/models/Profile.model";
+import { AddUserInput } from "../dtos/inputs/AddUser.input";
+import * as UuidHelper from "../../../app/infra/helpers/UuidHelper.helper";
 
 @Resolver(() => User)
 export class UsersResolver {
@@ -31,6 +40,30 @@ export class UsersResolver {
 
     const users = await findUsersService.execute();
     return users;
+  }
+
+  @Mutation(() => User)
+  addUser(@Arg("data") newUser: AddUserInput): User {
+    const userRaw = {
+      id: UuidHelper.generate(),
+      name: newUser.name,
+      email: newUser.email,
+      age: newUser.age,
+      salary_real: null,
+      vip: false,
+      status: UserStatus.ACTIVE,
+      profile_id: 1,
+    };
+
+    usersData.push(userRaw);
+
+    const { salary_real, ...userData } = userRaw;
+    const userToReturn: User = {
+      ...userData,
+      salary: salary_real,
+    };
+
+    return userToReturn;
   }
 
   @FieldResolver()
