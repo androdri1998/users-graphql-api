@@ -2,14 +2,14 @@ import { UserDTO } from "../../dtos/User.dto";
 import { UsersRepository } from "../../repositories/UsersRepository";
 
 export default class UsersInMemoryRepository implements UsersRepository {
-  databaseProvider: { [key: number]: UserDTO };
+  databaseProvider: UserDTO[];
 
-  constructor(databaseProvider: { [key: number]: UserDTO }) {
+  constructor(databaseProvider: UserDTO[]) {
     this.databaseProvider = databaseProvider;
   }
 
-  async getById(id: number): Promise<UserDTO | null> {
-    const foundUser = this.databaseProvider[id];
+  async getById(id: string): Promise<UserDTO | null> {
+    const foundUser = this.databaseProvider.find((user) => user.id === id);
 
     return foundUser || null;
   }

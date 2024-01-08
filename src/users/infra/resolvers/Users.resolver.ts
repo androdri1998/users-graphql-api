@@ -20,7 +20,7 @@ export class UsersResolver {
     const usersRepository = new UsersInMemoryRepository(usersData);
     const findUserService = new FindUserService(usersRepository);
 
-    const users = await findUserService.execute(parseInt(user.id));
+    const users = await findUserService.execute(user.id);
     return users;
   }
 
