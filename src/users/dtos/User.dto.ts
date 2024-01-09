@@ -1,3 +1,9 @@
+export enum UserStatus {
+  ACTIVE = "ACTIVE",
+  INACTIVE = "INACTIVE",
+  BLOCKED = "BLOCKED",
+}
+
 export interface UserDTO {
   id: string;
   name: string;
@@ -5,5 +11,6 @@ export interface UserDTO {
   age?: number;
   salary_real?: number;
   vip?: boolean;
-  status?: string;
+  status?: UserStatus;
+  profile_id?: string;
 }

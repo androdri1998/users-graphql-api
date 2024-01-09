@@ -1,0 +1,27 @@
+import { UserDTO, UserStatus } from "../../dtos/User.dto";
+import { UsersRepository } from "../../repositories/UsersRepository";
+import { CreateUserDTO, ICreateUserService } from "../CreateUserService";
+
+export class CreateUserService implements ICreateUserService {
+  usersRepository: UsersRepository;
+
+  constructor(usersRepository) {
+    this.usersRepository = usersRepository;
+  }
+
+  async execute(user: CreateUserDTO): Promise<UserDTO> {
+    const userRaw = {
+      name: user.name,
+      email: user.email,
+      age: user.age,
+      salary_real: 1000,
+      vip: false,
+      status: UserStatus.ACTIVE,
+      profile_id: "1",
+    };
+
+    const userCreated = await this.usersRepository.create(userRaw);
+
+    return userCreated;
+  }
+}

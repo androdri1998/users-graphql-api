@@ -6,12 +6,7 @@ import {
   ObjectType,
   registerEnumType,
 } from "type-graphql";
-
-export enum UserStatus {
-  ACTIVE = "ACTIVE",
-  INACTIVE = "INACTIVE",
-  BLOCKED = "BLOCKED",
-}
+import { UserStatus } from "../../../dtos/User.dto";
 
 registerEnumType(UserStatus, {
   name: "UserStatus",
@@ -30,14 +25,14 @@ export class User {
   email: string;
 
   @Field((type) => Int, { nullable: true })
-  age: number;
+  age?: number;
 
   @Field((type) => Float, { nullable: true })
-  salary: number;
+  salary?: number;
 
   @Field({ nullable: true })
-  vip: boolean;
+  vip?: boolean;
 
   @Field((type) => UserStatus)
-  status: UserStatus;
+  status?: UserStatus;
 }

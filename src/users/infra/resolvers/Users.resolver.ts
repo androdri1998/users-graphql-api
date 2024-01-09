@@ -7,7 +7,8 @@ import {
   Root,
 } from "type-graphql";
 
-import { User, UserStatus } from "../dtos/models/User.model";
+import { User } from "../dtos/models/User.model";
+import { UserStatus } from "../../dtos/User.dto";
 import { UserInput } from "../dtos/inputs/User.input";
 import { SearchUserInput } from "../dtos/inputs/SearchUser.input";
 import { users as usersData } from "../database";
@@ -20,7 +21,7 @@ import { profiles as profileData } from "../../../profiles/infra/database";
 import FindProfileService from "../../../profiles/services/implementations/FindProfile.service";
 import { Profile } from "../../../profiles/infra/dtos/models/Profile.model";
 import { AddUserInput } from "../dtos/inputs/AddUser.input";
-import * as UuidHelper from "../../../app/infra/helpers/UuidHelper.helper";
+import { CreateUserService } from "../../services/implementations/CreateUser.service";
 
 @Resolver(() => User)
 export class UsersResolver {
@@ -43,27 +44,13 @@ export class UsersResolver {
   }
 
   @Mutation(() => User)
-  addUser(@Arg("data") newUser: AddUserInput): User {
-    const userRaw = {
-      id: UuidHelper.generate(),
-      name: newUser.name,
-      email: newUser.email,
-      age: newUser.age,
-      salary_real: null,
-      vip: false,
-      status: UserStatus.ACTIVE,
-      profile_id: 1,
-    };
+  async addUser(@Arg("data") newUser: AddUserInput) {
+    const usersRepository = new UsersInMemoryRepository(usersData);
+    const createUserService = new CreateUserService(usersRepository);
 
-    usersData.push(userRaw);
+    const user = await createUserService.execute(newUser);
 
-    const { salary_real, ...userData } = userRaw;
-    const userToReturn: User = {
-      ...userData,
-      salary: salary_real,
-    };
-
-    return userToReturn;
+    return user;
   }
 
   @FieldResolver()

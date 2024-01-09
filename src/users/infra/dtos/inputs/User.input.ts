@@ -1,5 +1,5 @@
 import { ID, Int, Float, Field, ObjectType, InputType } from "type-graphql";
-import { UserStatus } from "../models/User.model";
+import { UserStatus } from "../../../dtos/User.dto";
 
 @InputType()
 export class UserInput {
