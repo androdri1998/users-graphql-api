@@ -19,7 +19,7 @@ export class CreateUserService implements ICreateUserService {
       name: user.name,
       email: user.email,
       age: user.age,
-      salary_real: 1000,
+      salary_real: null,
       vip: false,
       status: UserStatus.ACTIVE,
       profile_id: "1",
