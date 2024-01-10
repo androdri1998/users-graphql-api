@@ -4,7 +4,7 @@ import { IDeleteUserService } from "../DeleteUserService";
 export class DeleteUserService implements IDeleteUserService {
   usersRepository: UsersRepository;
 
-  constructor(usersRepository) {
+  constructor(usersRepository: UsersRepository) {
     this.usersRepository = usersRepository;
   }
 

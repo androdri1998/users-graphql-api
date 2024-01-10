@@ -8,7 +8,6 @@ import {
 } from "type-graphql";
 
 import { User } from "../dtos/models/User.model";
-import { UserStatus } from "../../dtos/User.dto";
 import { UserInput } from "../dtos/inputs/User.input";
 import { SearchUserInput } from "../dtos/inputs/SearchUser.input";
 import { users as usersData } from "../database";
@@ -24,6 +23,8 @@ import { AddUserInput } from "../dtos/inputs/AddUser.input";
 import { CreateUserService } from "../../services/implementations/CreateUser.service";
 import { DeleteUserInput } from "../dtos/inputs/DeleteUser.input";
 import { DeleteUserService } from "../../services/implementations/DeleteUser.service";
+import { UpdateUserService } from "../../services/implementations/UpdateUser.service";
+import { UpdateUserInput } from "../dtos/inputs/UpdateUser.input";
 
 @Resolver(() => User)
 export class UsersResolver {
@@ -65,6 +66,18 @@ export class UsersResolver {
     const isUserDeleted = await deleteUserService.execute(user.id);
 
     return isUserDeleted;
+  }
+
+  @Mutation(() => User, {
+    nullable: true,
+  })
+  async updateUser(@Arg("data") user: UpdateUserInput) {
+    const usersRepository = new UsersInMemoryRepository(usersData);
+    const updateUserService = new UpdateUserService(usersRepository);
+
+    const userUpdated = await updateUserService.execute(user);
+
+    return userUpdated;
   }
 
   @FieldResolver()

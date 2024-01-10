@@ -5,7 +5,7 @@ import { CreateUserDTO, ICreateUserService } from "../CreateUserService";
 export class CreateUserService implements ICreateUserService {
   usersRepository: UsersRepository;
 
-  constructor(usersRepository) {
+  constructor(usersRepository: UsersRepository) {
     this.usersRepository = usersRepository;
   }
 

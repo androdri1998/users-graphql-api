@@ -2,6 +2,7 @@ import * as UuidHelper from "../../../app/infra/helpers/UuidHelper.helper";
 import { UserDTO } from "../../dtos/User.dto";
 import {
   TCreateUserDTO,
+  TUpdateUserDTO,
   UsersRepository,
 } from "../../repositories/UsersRepository";
 
@@ -49,5 +50,26 @@ export default class UsersInMemoryRepository implements UsersRepository {
     this.databaseProvider.splice(userIndex, 1);
 
     return true;
+  }
+
+  async updateById(user: TUpdateUserDTO): Promise<UserDTO> {
+    const { id, ...userToUpdate } = user;
+    const userIndex = this.databaseProvider.findIndex(
+      (currentUser) => currentUser.id === id
+    );
+
+    if (userIndex < 0) {
+      return null;
+    }
+
+    const currentUser = this.databaseProvider[userIndex];
+    const userUpdated = {
+      ...currentUser,
+      ...userToUpdate,
+    };
+
+    this.databaseProvider.splice(userIndex, 1, userUpdated);
+
+    return userUpdated;
   }
 }

@@ -44,6 +44,17 @@ input AddUserInput {
   name: String!
 }
 
+input UpdateUserInput {
+  age: Int
+  email: String
+  id: ID!
+  name: String
+  profile_id: ID
+  salary_real: Float
+  status: UserStatus
+  vip: Boolean
+}
+
 input DeleteUserInput {
   id: ID!
 }
@@ -71,6 +82,7 @@ type Query {
 type Mutation {
   addUser(data: AddUserInput!): User!
   deleteUser(data: DeleteUserInput!): Boolean
+  updateUser(data: UpdateUserInput!): User
 }
 ```
 
@@ -83,6 +95,7 @@ type Mutation {
 
 - addUser(data: AddUserInput!): User!
 - deleteUser(data: DeleteUserInput!): Boolean
+- updateUser(data: UpdateUserInput!): User
 
 ## Profiles
 
