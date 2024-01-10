@@ -10,6 +10,11 @@ export class CreateUserService implements ICreateUserService {
   }
 
   async execute(user: CreateUserDTO): Promise<UserDTO> {
+    const isUserCreated = await this.usersRepository.getByEmail(user.email);
+    if (isUserCreated) {
+      throw new Error("E-mail alrealdy in use");
+    }
+
     const userRaw = {
       name: user.name,
       email: user.email,

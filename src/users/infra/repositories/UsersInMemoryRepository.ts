@@ -18,6 +18,14 @@ export default class UsersInMemoryRepository implements UsersRepository {
     return foundUser || null;
   }
 
+  async getByEmail(email: string): Promise<UserDTO | null> {
+    const foundUser = this.databaseProvider.find(
+      (user) => user.email === email
+    );
+
+    return foundUser || null;
+  }
+
   async index(): Promise<UserDTO[]> {
     return Object.values(this.databaseProvider).map((value) => value);
   }

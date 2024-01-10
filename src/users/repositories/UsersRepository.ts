@@ -5,4 +5,5 @@ export interface UsersRepository {
   getById(id: string): Promise<UserDTO | null>;
   index(): Promise<UserDTO[]>;
   create(user: TCreateUserDTO): Promise<UserDTO>;
+  getByEmail(email: string): Promise<UserDTO | null>;
 }
