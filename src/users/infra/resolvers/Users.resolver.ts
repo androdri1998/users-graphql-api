@@ -22,6 +22,8 @@ import FindProfileService from "../../../profiles/services/implementations/FindP
 import { Profile } from "../../../profiles/infra/dtos/models/Profile.model";
 import { AddUserInput } from "../dtos/inputs/AddUser.input";
 import { CreateUserService } from "../../services/implementations/CreateUser.service";
+import { DeleteUserInput } from "../dtos/inputs/DeleteUser.input";
+import { DeleteUserService } from "../../services/implementations/DeleteUser.service";
 
 @Resolver(() => User)
 export class UsersResolver {
@@ -51,6 +53,18 @@ export class UsersResolver {
     const user = await createUserService.execute(newUser);
 
     return user;
+  }
+
+  @Mutation(() => Boolean, {
+    nullable: true,
+  })
+  async deleteUser(@Arg("data") user: DeleteUserInput) {
+    const usersRepository = new UsersInMemoryRepository(usersData);
+    const deleteUserService = new DeleteUserService(usersRepository);
+
+    const isUserDeleted = await deleteUserService.execute(user.id);
+
+    return isUserDeleted;
   }
 
   @FieldResolver()
