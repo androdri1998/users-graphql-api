@@ -44,14 +44,12 @@ input AddUserInput {
   name: String!
 }
 
-input SearchUserInput {
+input DeleteUserInput {
   id: ID!
 }
 
-enum UserStatus {
-  ACTIVE
-  BLOCKED
-  INACTIVE
+input SearchUserInput {
+  id: ID!
 }
 
 type User {
@@ -65,13 +63,14 @@ type User {
   vip: Boolean
 }
 
-type Mutation {
-  addUser(data: AddUserInput!): User!
-}
-
 type Query {
   user(data: SearchUserInput!): User
   users: [User]!
+}
+
+type Mutation {
+  addUser(data: AddUserInput!): User!
+  deleteUser(data: DeleteUserInput!): Boolean
 }
 ```
 
@@ -83,6 +82,7 @@ type Query {
 ### Mutations available
 
 - addUser(data: AddUserInput!): User!
+- deleteUser(data: DeleteUserInput!): Boolean
 
 ## Profiles
 

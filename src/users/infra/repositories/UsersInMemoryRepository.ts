@@ -37,13 +37,13 @@ export default class UsersInMemoryRepository implements UsersRepository {
     return user;
   }
 
-  async deleteById(id: string): Promise<Boolean> {
+  async deleteById(id: string): Promise<Boolean | null> {
     const userIndex = this.databaseProvider.findIndex(
       (currentUser) => currentUser.id === id
     );
 
     if (userIndex < 0) {
-      throw new Error("User not found");
+      return null;
     }
 
     this.databaseProvider.splice(userIndex, 1);
