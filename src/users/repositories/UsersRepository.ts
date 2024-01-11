@@ -18,6 +18,6 @@ export interface UsersRepository {
   index(): Promise<UserDTO[]>;
   create(user: TCreateUserDTO): Promise<UserDTO>;
   getByEmail(email: string): Promise<UserDTO | null>;
-  deleteById(id: string): Promise<Boolean | null>;
+  deleteByIdOrEmail(identifier: string): Promise<Boolean | null>;
   updateById(user: TUpdateUserDTO): Promise<UserDTO>;
 }

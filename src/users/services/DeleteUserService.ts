@@ -1,3 +1,8 @@
+export type TDeleteUserDTO = {
+  email: string;
+  id: string;
+};
+
 export interface IDeleteUserService {
-  execute(id: string): Promise<Boolean>;
+  execute(data: TDeleteUserDTO): Promise<Boolean>;
 }

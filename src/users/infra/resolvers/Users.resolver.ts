@@ -63,7 +63,7 @@ export class UsersResolver {
     const usersRepository = new UsersInMemoryRepository(usersData);
     const deleteUserService = new DeleteUserService(usersRepository);
 
-    const isUserDeleted = await deleteUserService.execute(user.id);
+    const isUserDeleted = await deleteUserService.execute(user);
 
     return isUserDeleted;
   }

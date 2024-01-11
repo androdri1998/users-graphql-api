@@ -56,7 +56,8 @@ input UpdateUserInput {
 }
 
 input DeleteUserInput {
-  id: ID!
+  email: String
+  id: ID
 }
 
 input SearchUserInput {
