@@ -11,6 +11,9 @@ import { CreateProfileInput } from "../dtos/inputs/CreateProfile.input";
 import { CreateProfileService } from "../../services/implementations/CreateProfile.service";
 import { DeleteProfileInput } from "../dtos/inputs/DeleteProfile.input";
 import { DeleteProfileService } from "../../services/implementations/DeleteProfile.service";
+import { UpdateProfileFilterInput } from "../dtos/inputs/UpdateProfileFilter.input";
+import { UpdateProfileInput } from "../dtos/inputs/UpdateProfile.input";
+import { UdpateProfileService } from "../../services/implementations/UpdateProfile.service";
 
 @Resolver(() => Profile)
 export class ProfilesResolver {
@@ -52,6 +55,16 @@ export class ProfilesResolver {
     return isDeleted;
   }
 
-  // @Mutation(() => Profile)
-  // async updateProfile() {}
+  @Mutation(() => Profile, { nullable: true })
+  async updateProfile(
+    @Arg("filter") filter: UpdateProfileFilterInput,
+    @Arg("profile") profile: UpdateProfileInput
+  ) {
+    const profilesRepository = new ProfilesInMemoryRepository(profileData);
+    const updateProfileService = new UdpateProfileService(profilesRepository);
+
+    const profileUpdated = await updateProfileService.execute(filter, profile);
+
+    return profileUpdated;
+  }
 }

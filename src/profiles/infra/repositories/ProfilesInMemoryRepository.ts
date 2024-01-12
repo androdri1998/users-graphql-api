@@ -1,5 +1,9 @@
 import { ProfileDTO } from "../../dtos/Profile.dto";
-import { ProfilesRepository } from "../../repositories/ProfilesRepository";
+import {
+  ProfilesRepository,
+  TUpdateProfileDTO,
+  TUpdateProfileFilterDTO,
+} from "../../repositories/ProfilesRepository";
 import { getNextId } from "../database";
 
 export default class ProfilesInMemoryRepository implements ProfilesRepository {
@@ -41,5 +45,23 @@ export default class ProfilesInMemoryRepository implements ProfilesRepository {
     delete this.databaseProvider[id];
 
     return true;
+  }
+
+  async udpateById(
+    filter: TUpdateProfileFilterDTO,
+    profile: TUpdateProfileDTO
+  ): Promise<ProfileDTO> {
+    const currentProfile = await this.getById(filter.id);
+
+    if (!currentProfile) {
+      return null;
+    }
+
+    this.databaseProvider[filter.id] = {
+      ...currentProfile,
+      ...profile,
+    };
+
+    return await this.getById(filter.id);
   }
 }
