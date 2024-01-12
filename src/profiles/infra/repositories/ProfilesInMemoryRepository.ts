@@ -1,5 +1,6 @@
 import { ProfileDTO } from "../../dtos/Profile.dto";
 import { ProfilesRepository } from "../../repositories/ProfilesRepository";
+import { getNextId } from "../database";
 
 export default class ProfilesInMemoryRepository implements ProfilesRepository {
   databaseProvider: { [key: number]: ProfileDTO };
@@ -16,5 +17,17 @@ export default class ProfilesInMemoryRepository implements ProfilesRepository {
 
   async index(): Promise<ProfileDTO[]> {
     return Object.values(this.databaseProvider).map((value) => value);
+  }
+
+  async create(name: string): Promise<ProfileDTO> {
+    const id = getNextId();
+    const profile: ProfileDTO = {
+      id: String(id),
+      name,
+    };
+
+    this.databaseProvider[id] = profile;
+
+    return profile;
   }
 }
