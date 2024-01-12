@@ -3,9 +3,6 @@ import { UserStatus } from "../../../dtos/User.dto";
 
 @InputType()
 export class UpdateUserInput {
-  @Field((type) => ID)
-  readonly id: string;
-
   @Field({ nullable: true })
   name: string;
 

@@ -25,6 +25,7 @@ import { DeleteUserInput } from "../dtos/inputs/DeleteUser.input";
 import { DeleteUserService } from "../../services/implementations/DeleteUser.service";
 import { UpdateUserService } from "../../services/implementations/UpdateUser.service";
 import { UpdateUserInput } from "../dtos/inputs/UpdateUser.input";
+import { UpdateUserFilterInput } from "../dtos/inputs/UpdateUserFilter.input";
 
 @Resolver(() => User)
 export class UsersResolver {
@@ -71,11 +72,14 @@ export class UsersResolver {
   @Mutation(() => User, {
     nullable: true,
   })
-  async updateUser(@Arg("data") user: UpdateUserInput) {
+  async updateUser(
+    @Arg("filter") filter: UpdateUserFilterInput,
+    @Arg("user") user: UpdateUserInput
+  ) {
     const usersRepository = new UsersInMemoryRepository(usersData);
     const updateUserService = new UpdateUserService(usersRepository);
 
-    const userUpdated = await updateUserService.execute(user);
+    const userUpdated = await updateUserService.execute(filter, user);
 
     return userUpdated;
   }

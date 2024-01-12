@@ -1,9 +1,10 @@
 import { UserDTO } from "../../dtos/User.dto";
+import { UsersRepository } from "../../repositories/UsersRepository";
 import {
+  IUpdateUserService,
   TUpdateUserDTO,
-  UsersRepository,
-} from "../../repositories/UsersRepository";
-import { IUpdateUserService } from "../UpdateUserService";
+  TUpdateUserFilterDTO,
+} from "../UpdateUserService";
 
 export class UpdateUserService implements IUpdateUserService {
   usersRepository: UsersRepository;
@@ -12,7 +13,10 @@ export class UpdateUserService implements IUpdateUserService {
     this.usersRepository = usersRepository;
   }
 
-  async execute(user: TUpdateUserDTO): Promise<UserDTO> {
-    return await this.usersRepository.updateById(user);
+  async execute(
+    filter: TUpdateUserFilterDTO,
+    user: TUpdateUserDTO
+  ): Promise<UserDTO> {
+    return await this.usersRepository.updateById(filter, user);
   }
 }

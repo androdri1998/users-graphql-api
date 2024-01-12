@@ -1,10 +1,14 @@
 import * as UuidHelper from "../../../app/infra/helpers/UuidHelper.helper";
 import { UserDTO } from "../../dtos/User.dto";
+import * as UserHelper from "../../helpers/UserHelper";
 import {
   TCreateUserDTO,
-  TUpdateUserDTO,
   UsersRepository,
 } from "../../repositories/UsersRepository";
+import {
+  TUpdateUserDTO,
+  TUpdateUserFilterDTO,
+} from "../../services/UpdateUserService";
 
 export default class UsersInMemoryRepository implements UsersRepository {
   databaseProvider: UserDTO[];
@@ -39,9 +43,9 @@ export default class UsersInMemoryRepository implements UsersRepository {
   }
 
   async deleteByIdOrEmail(identifier: string): Promise<Boolean | null> {
-    const userIndex = this.databaseProvider.findIndex(
-      (currentUser) =>
-        currentUser.id === identifier || currentUser.email === identifier
+    const userIndex = UserHelper.findByIdOrEmail(
+      identifier,
+      this.databaseProvider
     );
 
     if (userIndex < 0) {
@@ -53,10 +57,19 @@ export default class UsersInMemoryRepository implements UsersRepository {
     return true;
   }
 
-  async updateById(user: TUpdateUserDTO): Promise<UserDTO> {
-    const { id, ...userToUpdate } = user;
-    const userIndex = this.databaseProvider.findIndex(
-      (currentUser) => currentUser.id === id
+  async updateById(
+    filter: TUpdateUserFilterDTO,
+    user: TUpdateUserDTO
+  ): Promise<UserDTO> {
+    const identifier = filter.id || filter.email;
+
+    if (!identifier) {
+      return null;
+    }
+
+    const userIndex = UserHelper.findByIdOrEmail(
+      identifier,
+      this.databaseProvider
     );
 
     if (userIndex < 0) {
@@ -66,7 +79,7 @@ export default class UsersInMemoryRepository implements UsersRepository {
     const currentUser = this.databaseProvider[userIndex];
     const userUpdated = {
       ...currentUser,
-      ...userToUpdate,
+      ...user,
     };
 
     this.databaseProvider.splice(userIndex, 1, userUpdated);
