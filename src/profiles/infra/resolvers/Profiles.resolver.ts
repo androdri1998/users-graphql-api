@@ -9,6 +9,8 @@ import FindProfilesService from "../../services/implementations/FindProfiles.ser
 import FindProfileService from "../../services/implementations/FindProfile.service";
 import { CreateProfileInput } from "../dtos/inputs/CreateProfile.input";
 import { CreateProfileService } from "../../services/implementations/CreateProfile.service";
+import { DeleteProfileInput } from "../dtos/inputs/DeleteProfile.input";
+import { DeleteProfileService } from "../../services/implementations/DeleteProfile.service";
 
 @Resolver(() => Profile)
 export class ProfilesResolver {
@@ -40,8 +42,15 @@ export class ProfilesResolver {
     return newProfile;
   }
 
-  // @Mutation(() => Boolean, { nullable: true })
-  // async deleteProfile() {}
+  @Mutation(() => Boolean, { nullable: true })
+  async deleteProfile(@Arg("filter") filter: DeleteProfileInput) {
+    const profilesRepository = new ProfilesInMemoryRepository(profileData);
+    const deleteProfileService = new DeleteProfileService(profilesRepository);
+
+    const isDeleted = await deleteProfileService.execute(filter);
+
+    return isDeleted;
+  }
 
   // @Mutation(() => Profile)
   // async updateProfile() {}

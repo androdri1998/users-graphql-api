@@ -10,6 +10,6 @@ export class DeleteUserService implements IDeleteUserService {
 
   async execute({ email, id }: TDeleteUserDTO): Promise<Boolean> {
     const identifier = id || email;
-    return this.usersRepository.deleteByIdOrEmail(identifier);
+    return await this.usersRepository.deleteByIdOrEmail(identifier);
   }
 }

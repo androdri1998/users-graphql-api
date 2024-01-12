@@ -30,4 +30,16 @@ export default class ProfilesInMemoryRepository implements ProfilesRepository {
 
     return profile;
   }
+
+  async deleteById(id: string): Promise<boolean | null> {
+    const profile = await this.getById(id);
+
+    if (!profile) {
+      return null;
+    }
+
+    delete this.databaseProvider[id];
+
+    return true;
+  }
 }
