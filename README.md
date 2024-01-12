@@ -107,13 +107,35 @@ type Query {
 ## Profiles
 
 ```
+input CreateProfileInput {
+  name: String!
+}
+
+input DeleteProfileInput {
+  id: ID!
+}
+
+input SearchProfileInput {
+  id: ID!
+}
+
+input UpdateProfileFilterInput {
+  id: ID!
+}
+
+input UpdateProfileInput {
+  name: String!
+}
+
 type Profile {
   id: ID!
   name: String!
 }
 
-input SearchProfileInput {
-  id: ID!
+type Mutation {
+  createProfile(profile: CreateProfileInput!): Profile!
+  deleteProfile(filter: DeleteProfileInput!): Boolean
+  updateProfile(filter: UpdateProfileFilterInput!, profile: UpdateProfileInput!): Profile
 }
 
 type Query {
@@ -126,3 +148,9 @@ type Query {
 
 - profile(data: SearchProfileInput!): Profile
 - profiles: [Profile]!
+
+### Mutations available
+
+- createProfile(profile: CreateProfileInput!): Profile!
+- deleteProfile(filter: DeleteProfileInput!): Boolean
+- updateProfile(filter: UpdateProfileFilterInput!, profile: UpdateProfileInput!): Profile
