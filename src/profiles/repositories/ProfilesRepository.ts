@@ -9,7 +9,7 @@ export interface ProfilesRepository {
   index(): Promise<ProfileDTO[]>;
   create(name: string): Promise<ProfileDTO>;
   deleteById(id: string): Promise<boolean | null>;
-  udpateById(
+  udpateByIdOrName(
     filter: TUpdateProfileFilterDTO,
     profile: TUpdateProfileDTO
   ): Promise<ProfileDTO | null>;

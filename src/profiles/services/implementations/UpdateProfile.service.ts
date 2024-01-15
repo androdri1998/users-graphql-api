@@ -17,6 +17,6 @@ export class UdpateProfileService implements IUdpateProfileService {
     filter: TUpdateProfileFilterDTO,
     profile: TUpdateProfileDTO
   ): Promise<ProfileDTO | null> {
-    return await this.profilesRepository.udpateById(filter, profile);
+    return await this.profilesRepository.udpateByIdOrName(filter, profile);
   }
 }

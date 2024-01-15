@@ -1,9 +1,9 @@
 import { ProfileDTO } from "../../dtos/Profile.dto";
+import { ProfilesRepository } from "../../repositories/ProfilesRepository";
 import {
-  ProfilesRepository,
   TUpdateProfileDTO,
   TUpdateProfileFilterDTO,
-} from "../../repositories/ProfilesRepository";
+} from "../../services/UpdateProfileService";
 import { getNextId } from "../database";
 
 export default class ProfilesInMemoryRepository implements ProfilesRepository {
@@ -47,21 +47,33 @@ export default class ProfilesInMemoryRepository implements ProfilesRepository {
     return true;
   }
 
-  async udpateById(
+  async udpateByIdOrName(
     filter: TUpdateProfileFilterDTO,
     profile: TUpdateProfileDTO
   ): Promise<ProfileDTO> {
-    const currentProfile = await this.getById(filter.id);
+    const { id, name } = filter;
 
-    if (!currentProfile) {
-      return null;
+    let currentProfile: ProfileDTO | null = null;
+    let updatedProfile: ProfileDTO | null = null;
+    if (id) {
+      currentProfile = await this.getById(filter.id);
+    } else if (name) {
+      currentProfile = Object.values(this.databaseProvider).find(
+        (profileItem) => profileItem.name === name
+      );
+    } else {
+      currentProfile = null;
     }
 
-    this.databaseProvider[filter.id] = {
-      ...currentProfile,
-      ...profile,
-    };
+    if (currentProfile) {
+      this.databaseProvider[currentProfile.id] = {
+        ...currentProfile,
+        ...profile,
+      };
 
-    return await this.getById(filter.id);
+      updatedProfile = await this.getById(currentProfile.id);
+    }
+
+    return updatedProfile || null;
   }
 }

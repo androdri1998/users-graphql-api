@@ -2,6 +2,7 @@ import { ProfileDTO } from "../dtos/Profile.dto";
 
 export type TUpdateProfileFilterDTO = {
   id: string;
+  name: string;
 };
 
 export type TUpdateProfileDTO = {
