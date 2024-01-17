@@ -124,7 +124,8 @@ input SearchProfileInput {
 }
 
 input UpdateProfileFilterInput {
-  id: ID!
+  id: ID
+  name: String
 }
 
 input UpdateProfileInput {
