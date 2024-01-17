@@ -12,28 +12,8 @@ This is a project to practice GraphQl and Node.js
 # Requirements
 
 - Need to have node.js installed
-- Need to have docker installed with docker compose
 
 # Setup application
-
-## Start database container
-
-Run `$ docker-compose up -d`
-
-## Create a .env file
-
-Create a .env file at root directory, there's a .env.example to be used as a draft and model.
-
-## Fill environment Variables
-
-```
-MYSQL_DATABASE=[MYSQL_DATABASE]
-MYSQL_USER=[MYSQL_USER]
-MYSQL_PASSWORD=[MYSQL_PASSWORD]
-MYSQL_ROOT_PASSWORD=[MYSQL_ROOT_PASSWORD]
-MYSQL_PORT=[MYSQL_PORT]
-MYSQL_HOST=[MYSQL_HOST]
-```
 
 ## Install dependencies
 
@@ -178,23 +158,3 @@ type Query {
 - createProfile(profile: CreateProfileInput!): Profile!
 - deleteProfile(filter: DeleteProfileInput!): Boolean
 - updateProfile(filter: UpdateProfileFilterInput!, profile: UpdateProfileInput!): Profile
-
-# Stop project
-
-## Stop and remove containers created by docker compose
-
-Run `$ docker-compose down`
-
-## Stop and remove containers and remove images created by docker compose
-
-Run `$ docker-compose down --rmi all`
-
-## Development
-
-To update docker images with services changes
-
-Run this commands
-
-1.`$ docker-compose down`  
-2.`$ docker-compose build`  
-3.`$ docker-compose up -d`
