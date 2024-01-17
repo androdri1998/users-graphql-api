@@ -32,11 +32,8 @@ MYSQL_USER=[MYSQL_USER]
 MYSQL_PASSWORD=[MYSQL_PASSWORD]
 MYSQL_ROOT_PASSWORD=[MYSQL_ROOT_PASSWORD]
 MYSQL_PORT=[MYSQL_PORT]
-```
-
-### MYSQL_HOST there's no need to fill, this variable is provided by docker compose setup
-
 MYSQL_HOST=[MYSQL_HOST]
+```
 
 ## Install dependencies
 
