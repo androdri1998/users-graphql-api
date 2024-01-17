@@ -26,13 +26,15 @@ Create a .env file at root directory, there's a .env.example to be used as a dra
 
 ## Fill environment Variables
 
+```
 MYSQL_DATABASE=[MYSQL_DATABASE]
 MYSQL_USER=[MYSQL_USER]
 MYSQL_PASSWORD=[MYSQL_PASSWORD]
 MYSQL_ROOT_PASSWORD=[MYSQL_ROOT_PASSWORD]
 MYSQL_PORT=[MYSQL_PORT]
+```
 
-# MYSQL_HOST there's no need to fill, this variable is provided by docker compose setup
+### MYSQL_HOST there's no need to fill, this variable is provided by docker compose setup
 
 MYSQL_HOST=[MYSQL_HOST]
 
