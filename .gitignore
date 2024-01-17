@@ -2,3 +2,5 @@
 node_modules
 schema.gql
 dist
+.env
+volumes
