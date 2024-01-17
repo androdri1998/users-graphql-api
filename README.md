@@ -195,6 +195,6 @@ To update docker images with services changes
 
 Run this commands
 
-`$ docker-compose down`
-`$ docker-compose build`
-`$ docker-compose up -d`
+1.`$ docker-compose down`  
+2.`$ docker-compose build`  
+3.`$ docker-compose up -d`
